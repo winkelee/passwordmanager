@@ -5,12 +5,21 @@
 <?import javafx.scene.layout.VBox?>
 
 <?import javafx.scene.control.Button?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.soft.passwordmanager.HelloController">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-    </padding>
-
-    <Label fx:id="welcomeText"/>
-    <Button text="Hello!" onAction="#onHelloButtonClick"/>
-</VBox>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ListView?>
+<BorderPane fx:id="root" xmlns:fx="http://javafx.com/fxml">
+    <left>
+        <VBox fx:id="credentialsPanel" prefWidth="200">
+            <HBox>
+                <TextField fx:id="searchBar" promptText="Enter website..."/>
+                <Button fx:id="addButton" text="+"/>
+            </HBox>
+            <ListView fx:id="credentialsList"/>
+        </VBox>
+    </left>
+    <center>
+    </center>
+</BorderPane>

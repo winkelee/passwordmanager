@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.soft.passwordmanager.ImportController"
+            prefHeight="400.0" prefWidth="600.0">
+    <VBox>
+        <Label text="Add new credentials."/>
+        <HBox>
+            <Label text="Add new credentials via import (csv)."/>
+            <Button text="Import..." fx:id="importButton"/>
+        </HBox>
+        <VBox>
+            <Label text="Or add new credentials natively"/>
+            <HBox>
+                <TextField text="Username..." fx:id="addUsernameField"/>
+                <TextField text="Password..." fx:id="addPasswordField"/>
+                <TextField text="URL..." fx:id="addURLField"/>
+                <Button fx:id="addButton" text="Add"/>
+            </HBox>
+        </VBox>
+    </VBox>
+</AnchorPane>
