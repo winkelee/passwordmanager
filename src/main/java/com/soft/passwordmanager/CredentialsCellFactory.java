@@ -1,4 +1,4 @@
-package com.soft.passwordmanager.out.com.soft.passwordmanager;
+package com.soft.passwordmanager;
 
 import com.soft.passwordmanager.Credentials;
 import javafx.scene.control.ListCell;

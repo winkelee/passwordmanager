@@ -10,11 +10,13 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ListView?>
-<BorderPane fx:id="root" xmlns:fx="http://javafx.com/fxml" fx:controller="com.soft.passwordmanager.MainController">
+<BorderPane fx:id="root" xmlns:fx="http://javafx.com/fxml" fx:controller="com.soft.passwordmanager.MainController" >
     <left>
         <VBox fx:id="credentialsPanel" prefWidth="200">
-            <HBox>
-                <TextField fx:id="searchBar" promptText="Enter website..."/>
+            <HBox  fx:id="topListFragment">
+                <HBox fx:id="searchBarWrapper">
+                    <TextField fx:id="searchBar" promptText="Enter website..."/>
+                </HBox>
                 <Button fx:id="addButton" text="+"/>
             </HBox>
             <ListView fx:id="credentialsList"/>

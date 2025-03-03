@@ -8,6 +8,10 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            prefHeight="400.0" prefWidth="600.0">
-    <Label text="Select a credential to view the details, or create a new one using the '+' button near the search bar." alignment="CENTER"/>
+            prefHeight="400.0" prefWidth="600.0" fx:controller="com.soft.passwordmanager.EmptyViewController"
+            fx:id="baseLayout">
+    <HBox fx:id="layout">
+        <Label text="Select a credential to view the details, or create a new one using the '+' button near the search bar." alignment="CENTER" fx:id="emptyText"/>
+    </HBox>
+
 </AnchorPane>
