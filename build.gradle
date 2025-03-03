@@ -16,8 +16,8 @@ ext {
     junitVersion = '5.8.2'
 }
 
-sourceCompatibility = '23'
-targetCompatibility = '23'
+sourceCompatibility = '17'
+targetCompatibility = '17'
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
@@ -25,7 +25,7 @@ tasks.withType(JavaCompile) {
 
 application {
     mainModule = 'com.soft.passwordmanager'
-    mainClass = 'com.soft.passwordmanager.HelloApplication'
+    mainClass = 'com.soft.passwordmanager.PasswordManager'
 }
 
 javafx {
@@ -53,4 +53,11 @@ jlink {
 
 jlinkZip {
     group = 'distribution'
+}
+
+run {
+    jvmArgs = [
+            '--module-path', classpath.asPath,
+            '--add-modules', 'javafx.controls,javafx.fxml'
+    ]
 }

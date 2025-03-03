@@ -10,9 +10,9 @@
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.soft.passwordmanager.ImportController"
             prefHeight="400.0" prefWidth="600.0">
-    <VBox>
+    <VBox spacing="15" alignment="TOP_LEFT" >
         <Label text="Add new credentials."/>
-        <HBox>
+        <HBox spacing="10" alignment="CENTER_LEFT">
             <Label text="Add new credentials via import (csv)."/>
             <Button text="Import..." fx:id="importButton"/>
         </HBox>

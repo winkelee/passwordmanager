@@ -55,4 +55,9 @@ public class Credentials {
     public void setHostUrl(String hostUrl) {
         this.hostUrl = hostUrl;
     }
+
+    @Override
+    public String toString(){
+        return username + " " + password + " " + hostUrl;
+    }
 }

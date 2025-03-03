@@ -1,5 +1,9 @@
 package com.soft.passwordmanager;
 
+import com.soft.passwordmanager.out.com.soft.passwordmanager.CredentialCell;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -29,13 +33,24 @@ public class MainController {
 
         //TODO: handle clicks on the ListView
         //TODO: implement populating the Listview with the custom objects.
-        //TODO: handle clicks on the addButton
+        //TODO: handle clicks on the addButton -- DONE
         //TODO: handle entering text in the searchBar
-        credentialsList.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
-            if (newVal != null){
-                loadView("details-view.fxml");
+        //credentialsList.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+        //    if (newVal != null){
+        //        loadView("details-view.fxml");
+        //    }
+        //});
+        addButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                loadView("new-view.fxml");
             }
         });
+    }
+
+    public void setItemsInListView(ObservableList<Credentials>  observableList){
+        credentialsList.setItems(observableList);
+        credentialsList.setCellFactory(param -> new CredentialCell());
     }
 
     public void loadView(String fxmlFile){
@@ -48,5 +63,4 @@ public class MainController {
         }
 
     }
-
 }
