@@ -17,7 +17,7 @@
             <Label text="Add new credentials via import (csv)." fx:id="importLabel"/>
             <Button text="Import..." fx:id="importButton" id="importButton"/>
         </HBox>
-        <VBox>
+        <VBox spacing="10">
             <Label text="Or add new credentials natively" fx:id="nativeLabel"/>
             <HBox>
                 <TextField promptText="Username..." fx:id="addUsernameField"/>

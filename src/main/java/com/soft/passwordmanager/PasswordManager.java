@@ -28,6 +28,7 @@ public class PasswordManager extends Application {
                 new Credentials("username3", "password3", "example3.com")
         );
         mainController.setItemsInListView(credentialsTest);
+        mainController.setDataFromList(credentialsTest);
         mainController.initialize();
         scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
         primaryStage.setScene(scene);

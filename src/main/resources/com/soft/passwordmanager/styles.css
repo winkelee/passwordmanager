@@ -30,51 +30,26 @@
     -fx-background-color: #282828;
 }
 
-.search-bar{
+.text-field-primary{
     -fx-background-color: #282828;
     -fx-border-color: #665C54;
     -fx-text-fill: #FBF1C7;
-}
-
-.add-button{
-    -fx-background-color: #282828;
-    -fx-border-color: #665C54;
-    -fx-text-fill: #FBF1C7;
-}
-
-.add-button:hover{
-    -fx-background-color: #3C3836;
-}
-
-.add-button:pressed{
-    -fx-background-color: #FBF1C7;
-    -fx-text-fill: #665C54;
 }
 
 .base-layout-details{
     -fx-background-color: #282828;
 }
 
-.website-label{
+.header-label{
     -fx-text-fill: #FBF1C7;
     -fx-font-size: 30;
 }
 
-.username-field-details{
-    -fx-text-fill: #7B765E;
-    -fx-font-size: 17;
-}
-
-.password-field-details{
-    -fx-text-fill: #7B765E;
-    -fx-font-size: 17;
-}
-
-.base-layout-empty{
+.base-layout{
     -fx-background-color: #282828;
 }
 
-.empty-text-label{
+.text-label-primary{
     -fx-text-fill: #FBF1C7;
     -fx-font-size: 20;
 }
@@ -83,125 +58,22 @@
     -fx-background-color: #282828;
 }
 
-.new-credentials-label{
+.small-primary-label{
     -fx-text-fill: #FBF1C7;
-    -fx-font-size: 30;
+    -fx-font-size: 17;
 }
 
-.import-label{
-    -fx-text-fill: #FBF1C7;
-    -fx-font-size: 20;
-}
-
-.import-button{
+.button-primary{
     -fx-background-color: #282828;
     -fx-border-color: #665C54;
     -fx-text-fill: #FBF1C7;
 }
 
-.import-button:hover{
+.button-primary:hover{
     -fx-background-color: #3C3836;
 }
 
-.import-button:pressed{
-    -fx-background-color: #FBF1C7;
-    -fx-text-fill: #665C54;
-}
-
-.native-label{
-    -fx-text-fill: #FBF1C7;
-    -fx-font-size: 20;
-}
-
-.add-username-field{
-    -fx-background-color: #282828;
-    -fx-border-color: #665C54;
-    -fx-text-fill: #FBF1C7;
-}
-
-.add-password-field{
-    -fx-background-color: #282828;
-    -fx-border-color: #665C54;
-    -fx-text-fill: #FBF1C7;
-}
-
-.add-URL-field{
-    -fx-background-color: #282828;
-    -fx-border-color: #665C54;
-    -fx-text-fill: #FBF1C7;
-}
-
-.add-button-new{
-    -fx-background-color: #282828;
-    -fx-border-color: #665C54;
-    -fx-text-fill: #FBF1C7;
-}
-
-.add-button-new:hover{
-    -fx-background-color: #3C3836;
-}
-
-.add-button-new:pressed{
-    -fx-background-color: #FBF1C7;
-    -fx-text-fill: #665C54;
-}
-
-.edit-button{
-    -fx-background-color: #282828;
-    -fx-border-color: #665C54;
-    -fx-text-fill: #FBF1C7;
-}
-
-.edit-button:hover{
-    -fx-background-color: #3C3836;
-}
-
-.edit-button:pressed{
-    -fx-background-color: #FBF1C7;
-    -fx-text-fill: #665C54;
-}
-
-.delete-button{
-    -fx-background-color: #282828;
-    -fx-border-color: #665C54;
-    -fx-text-fill: #FBF1C7;
-}
-
-.delete-button:hover{
-    -fx-background-color: #3C3836;
-}
-
-.delete-button:pressed{
-    -fx-background-color: #FBF1C7;
-    -fx-text-fill: #665C54;
-}
-
-.copy-button-username-details{
-    -fx-background-color: #282828;
-    -fx-border-color: #665C54;
-    -fx-text-fill: #FBF1C7;
-}
-
-.copy-button-username-details:hover{
-    -fx-background-color: #3C3836;
-}
-
-.copy-button-username-details:pressed{
-    -fx-background-color: #FBF1C7;
-    -fx-text-fill: #665C54;
-}
-
-.copy-button-password-details{
-    -fx-background-color: #282828;
-    -fx-border-color: #665C54;
-    -fx-text-fill: #FBF1C7;
-}
-
-.copy-button-password-details:hover{
-    -fx-background-color: #3C3836;
-}
-
-.copy-button-password-details:pressed{
+.button-primary:pressed{
     -fx-background-color: #FBF1C7;
     -fx-text-fill: #665C54;
 }

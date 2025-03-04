@@ -34,15 +34,15 @@ public class ImportController {
 
     @FXML
     public void initialize(){
-        baseLayout.getStyleClass().add("base-layout-new");
-        newCredentialsLabel.getStyleClass().add("new-credentials-label");
-        importLabel.getStyleClass().add("import-label");
-        importButton.getStyleClass().add("import-button");
-        nativeLabel.getStyleClass().add("native-label");
-        addUsernameField.getStyleClass().add("add-username-field");
-        addPasswordField.getStyleClass().add("add-password-field");
-        addURLField.getStyleClass().add("add-URL-field");
-        addButton.getStyleClass().add("add-button-new");
+        baseLayout.getStyleClass().add("base-layout");
+        newCredentialsLabel.getStyleClass().add("header-label");
+        importLabel.getStyleClass().add("small-primary-label");
+        importButton.getStyleClass().add("button-primary");
+        nativeLabel.getStyleClass().add("small-primary-label");
+        addUsernameField.getStyleClass().add("text-field-primary");
+        addPasswordField.getStyleClass().add("text-field-primary");
+        addURLField.getStyleClass().add("text-field-primary");
+        addButton.getStyleClass().add("button-primary");
         Insets baseLayoutInsets = new Insets(20, 20, 20, 20);
         layout.setPadding(baseLayoutInsets);
     }

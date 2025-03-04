@@ -19,9 +19,8 @@ public class EmptyViewController {
     public void initialize(){ //This runs after all the FXML components are loaded. DO NOT USE A CONSTRUCTOR.
         Insets layoutInsets = new Insets(20, 20, 20 ,20);
         layout.setPadding(layoutInsets);
-        baseLayout.getStyleClass().add("base-layout-empty");
-        emptyText.getStyleClass().add("empty-text-label");
-
+        baseLayout.getStyleClass().add("base-layout");
+        emptyText.getStyleClass().add("small-primary-label");
     }
 
 

@@ -38,14 +38,14 @@ public class DetailsController {
     public void setStyles(){
         Insets rootInsets = new Insets(20, 20, 20, 20);
         layout.setPadding(rootInsets);
-        baseLayout.getStyleClass().add("base-layout-details");
-        layout.getStyleClass().add("details-layout");
-        websiteLabel.getStyleClass().add("website-label");
-        usernameField.getStyleClass().add("username-field-details");
-        copyButtonUsername.getStyleClass().add("copy-button-username-details");
-        passwordField.getStyleClass().add("password-field-details");
-        editButton.getStyleClass().add("edit-button");
-        deleteButton.getStyleClass().add("delete-button");
-        copyButtonPassword.getStyleClass().add("copy-button-password-details");
+        baseLayout.getStyleClass().add("base-layout"); // Serious issue with all of this
+        layout.getStyleClass().add("details-layout");           //Buttons must have their own class
+        websiteLabel.getStyleClass().add("header-label");         //Then one for headers, primary text and secondary text
+        usernameField.getStyleClass().add("text-label-primary"); //And another one for TextFields so that we maintain consistency
+        copyButtonUsername.getStyleClass().add("button-primary");
+        passwordField.getStyleClass().add("text-label-primary");
+        editButton.getStyleClass().add("button-primary");
+        deleteButton.getStyleClass().add("button-primary");
+        copyButtonPassword.getStyleClass().add("button-primary");
     }
 }
