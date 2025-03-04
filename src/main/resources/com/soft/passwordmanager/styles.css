@@ -1,0 +1,79 @@
+.list-cell{
+    padding: 10px;
+    -fx-padding: 10px;
+    -fx-background-color: #282828;
+}
+
+.list-cell:hover{
+    -fx-background-color: #3C3836;
+}
+
+.list-cell:selected{
+    -fx-background-color: #3C3836;
+}
+
+.list-label-primary {
+    -fx-text-fill: #FBF1C7;
+
+}
+
+.list-label-secondary {
+    -fx-text-fill: #7B765E;
+}
+
+.listview-credentials{
+    -fx-background-color: #282828;
+    -fx-border-color: #665C54;
+}
+
+.top-list-fragment{
+    -fx-background-color: #282828;
+}
+
+.text-field-primary{
+    -fx-background-color: #282828;
+    -fx-border-color: #665C54;
+    -fx-text-fill: #FBF1C7;
+}
+
+.base-layout-details{
+    -fx-background-color: #282828;
+}
+
+.header-label{
+    -fx-text-fill: #FBF1C7;
+    -fx-font-size: 30;
+}
+
+.base-layout{
+    -fx-background-color: #282828;
+}
+
+.text-label-primary{
+    -fx-text-fill: #FBF1C7;
+    -fx-font-size: 20;
+}
+
+.base-layout-new{
+    -fx-background-color: #282828;
+}
+
+.small-primary-label{
+    -fx-text-fill: #FBF1C7;
+    -fx-font-size: 17;
+}
+
+.button-primary{
+    -fx-background-color: #282828;
+    -fx-border-color: #665C54;
+    -fx-text-fill: #FBF1C7;
+}
+
+.button-primary:hover{
+    -fx-background-color: #3C3836;
+}
+
+.button-primary:pressed{
+    -fx-background-color: #FBF1C7;
+    -fx-text-fill: #665C54;
+}

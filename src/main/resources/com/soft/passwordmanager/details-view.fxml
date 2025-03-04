@@ -9,14 +9,19 @@
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.soft.passwordmanager.DetailsController"
-            prefHeight="400.0" prefWidth="600.0">
-    <HBox>
+            prefHeight="400.0" prefWidth="600.0"
+            fx:id="baseLayout"
+            >
+    <HBox fx:id="layout" spacing="100">
         <VBox>
             <Label text="Website" fx:id="websiteLabel"/>
-            <TextField fx:id="usernameField"/>
-            <HBox>
-                <TextField fx:id="passwordField"/>
-                <Button fx:id="copyButton" text="Copy"/>
+            <HBox spacing="20">
+                <Label fx:id="usernameField"/>
+                <Button fx:id="copyButtonUsername" text="Copy"/>
+            </HBox>
+            <HBox spacing="20">
+                <Label fx:id="passwordField"/>
+                <Button fx:id="copyButtonPassword" text="Copy"/>
             </HBox>
         </VBox>
         <Button fx:id="editButton" text="Edit"/>
