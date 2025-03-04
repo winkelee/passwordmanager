@@ -1,5 +1,6 @@
 package com.soft.passwordmanager;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -19,7 +20,7 @@ import javafx.scene.layout.VBox;
 
 import java.time.Duration;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.stream.Collectors;
 
 public class MainController {
     @FXML
@@ -36,13 +37,13 @@ public class MainController {
     private Button addButton;
     @FXML
     private ListView<Credentials> credentialsList;
-
+    private String dataFromSearch;
+    private ObservableList<Credentials> dataFromList;
 
     @FXML
     public void initialize(){
         loadView("empty-view.fxml");
 
-        //TODO: handle entering text in the searchBar
         //TODO: add functionality to the new-view (encryption).
         //TODO: add functionality to the DetailsController so that user can copy the password/username with a button.
         //TODO: add import and export functionality.
@@ -59,15 +60,21 @@ public class MainController {
                 }
             }
         });
-
-        credentialsList.setOnKeyPressed(new EventHandler<KeyEvent>() {
+        searchBar.setOnKeyReleased(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-                if (event.equals(KeyCode.ENTER)){
-
+                if (event.getCode() == KeyCode.ENTER){
+                    dataFromSearch = searchBar.getText();
+                    try{
+                        ObservableList<Credentials> newData = FXCollections.observableList(lookForDomain(dataFromSearch, PasswordManager.credentialsTest));
+                        setItemsInListView(newData);
+                    } catch (Exception e){
+                        e.printStackTrace(); //The exception here is EXPECTED to happen every time user hits the enter button and the field is empty.
+                        setItemsInListView(PasswordManager.credentialsTest); //However, we handle it and do not let the program get spooked.
+                    }
+                }
             }
-        }
-    });
+        });
         Insets searchBarInsets = new Insets(10, 10, 10 ,10);
         searchBarWrapper.setPadding(searchBarInsets);
         addButton.setMaxHeight(Double.MAX_VALUE);
@@ -86,19 +93,24 @@ public class MainController {
         });
     }
 
-    public List<Credentials> lookForDomain(String string, List<Credentials> targetList){
-        ArrayList<Credentials> resultList = new ArrayList<Credentials>();
-        for (int i = 0; i < targetList.size(); i++){
-            if (targetList.get(i).getHostUrl() == string){
-                resultList.add(targetList.get(i));
+    public ObservableList<Credentials> lookForDomain(String targetQuery, ObservableList<Credentials> targetList){
+        ArrayList<Credentials> placeholderList = new ArrayList<>();
+        if (!targetQuery.equals("") && !targetQuery.equals(null)){
+            for (int i = 0; i < targetList.size(); i ++){
+                if (targetList.get(i).getHostUrl().contains(targetQuery)){
+                    placeholderList.add(targetList.get(i));
+                }
             }
+            return FXCollections.observableList(placeholderList);
+        } else {
+            return null;
         }
-        return  resultList;
     }
 
     public void setItemsInListView(ObservableList<Credentials>  observableList){
         credentialsList.setItems(observableList);
         credentialsList.setCellFactory(param -> new CredentialCell());
+        dataFromList = FXCollections.observableList(observableList);
     }
 
     public void loadView(String fxmlFile){

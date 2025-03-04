@@ -11,6 +11,11 @@ import javafx.stage.Stage;
 public class PasswordManager extends Application {
 
     Stage primaryStage;
+    public static final ObservableList<Credentials> credentialsTest = FXCollections.observableArrayList(
+            new Credentials("username1", "password1", "example1.com"),
+            new Credentials("username2", "password2", "example2.com"),
+            new Credentials("username3", "password3", "example3.com")
+    );
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
@@ -21,14 +26,7 @@ public class PasswordManager extends Application {
         primaryStage.setMinWidth(1200);
 
         MainController mainController = loader.getController(); //Getting an instance of a controller that is defined in the FXML file
-
-        ObservableList<Credentials> credentialsTest = FXCollections.observableArrayList(
-                new Credentials("username1", "password1", "example1.com"),
-                new Credentials("username2", "password2", "example2.com"),
-                new Credentials("username3", "password3", "example3.com")
-        );
         mainController.setItemsInListView(credentialsTest);
-        mainController.setDataFromList(credentialsTest);
         mainController.initialize();
         scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
         primaryStage.setScene(scene);
