@@ -6,6 +6,7 @@ import javax.crypto.spec.PBEKeySpec;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Base64;
 
@@ -19,19 +20,40 @@ public class PasswordCryptography {
         return factory.generateSecret(spec);
     }
 
-    public static String encrypt(String plaintext, SecretKey key, byte[] iv) throws NoSuchPaddingException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, InvalidAlgorithmParameterException, InvalidKeyException {
+    public static String encrypt(String plainText, SecretKey key) throws Exception {
+        byte[] iv = generateIV();
         Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
         cipher.init(Cipher.ENCRYPT_MODE, key, new IvParameterSpec(iv));
-        byte[] encryptedBytes = cipher.doFinal(plaintext.getBytes());
-        return Base64.getEncoder().encodeToString(encryptedBytes);
+
+        byte[] encryptedBytes = cipher.doFinal(plainText.getBytes());
+
+        byte[] combined = new byte[iv.length + encryptedBytes.length];
+        System.arraycopy(iv, 0, combined, 0, iv.length);
+        System.arraycopy(encryptedBytes, 0, combined, iv.length, encryptedBytes.length);
+
+        return Base64.getEncoder().encodeToString(combined);
     }
 
-    public static String decrypt(String encryptedText, SecretKey key, byte[] iv) throws Exception {
+    public static String decrypt(String encryptedText, SecretKey key) throws Exception {
+        byte[] combined = Base64.getDecoder().decode(encryptedText);
+
+        byte[] iv = new byte[16];
+        byte[] encryptedBytes = new byte[combined.length - 16];
+        System.arraycopy(combined, 0, iv, 0, 16);
+        System.arraycopy(combined, 16, encryptedBytes, 0, encryptedBytes.length);
+
         Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
         cipher.init(Cipher.DECRYPT_MODE, key, new IvParameterSpec(iv));
-        byte[] decodedBytes = Base64.getDecoder().decode(encryptedText);
-        byte[] decryptedBytes = cipher.doFinal(decodedBytes);
+        byte[] decryptedBytes = cipher.doFinal(encryptedBytes);
+
         return new String(decryptedBytes);
     }
+
+    public static byte[] generateIV() {
+        byte[] iv = new byte[16];
+        new SecureRandom().nextBytes(iv);
+        return iv;
+    }
+
 
 }

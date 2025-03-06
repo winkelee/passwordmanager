@@ -44,7 +44,9 @@ public class MainController {
     public void initialize(){
         loadView("empty-view.fxml");
 
-        //TODO: add functionality to the new-view (encryption).
+        //TODO: add functionality to the new-view (encryption). -- DONE
+        //TODO: use the written methods of PasswordFileController and PasswordCryptography to handle adding passwords.
+        //TODO: make a login screen.
         //TODO: add functionality to the DetailsController so that user can copy the password/username with a button.
         //TODO: add import and export functionality.
         credentialsList.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
