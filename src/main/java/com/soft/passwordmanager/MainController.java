@@ -87,6 +87,7 @@ public class MainController {
         searchBar.getStyleClass().add("text-field-primary");
         VBox.setVgrow(credentialsList, Priority.ALWAYS);
         credentialsList.getStyleClass().add("listview-credentials");
+        setItemsInListView(PasswordManager.credentialsTest); //We load testing, hardcoded credentials.
         addButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {

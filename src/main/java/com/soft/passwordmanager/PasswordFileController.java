@@ -1,15 +1,15 @@
 package com.soft.passwordmanager;
 
 import java.io.File;
-import java.io.IO;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Base64;
 
 public class PasswordFileController {
 
-    public static Path getAppDataPath(String fileName){
+    public static Path getAppDataPath(String fileName){ //Returns the path WITH the filename already.
         String os = System.getProperty("os.name").toLowerCase();
         String home = System.getProperty("user.home");
 
@@ -35,6 +35,30 @@ public class PasswordFileController {
         } else{
             return null;
         }
+    }
+
+    public static void saveMasterPassword(String masterPassword, Path filePath) throws Exception {
+        byte[] salt = PasswordCryptography.generateSalt();
+        String hash = PasswordCryptography.hashPassword(masterPassword, salt);
+        String encodedSalt = Base64.getEncoder().encodeToString(salt);
+        Files.write(filePath, (encodedSalt + ":" + hash).getBytes());
+    }
+
+    public static boolean verifyMasterPassword(String enteredPassword, Path filePath) throws Exception {
+        String storedData = Files.readString(filePath);
+        String[] parts = storedData.split(":");
+
+        byte[] salt = Base64.getDecoder().decode(parts[0]);
+        String expectedHash = parts[1];
+
+        String computedHash = PasswordCryptography.hashPassword(enteredPassword, salt);
+        return expectedHash.equals(computedHash);
+    }
+
+    public static byte[] getSalt(Path pathToMasterPassword) throws Exception{
+        String storedData = Files.readString(pathToMasterPassword);
+        String[] parts = storedData.split(":");
+        return Base64.getDecoder().decode(parts[0]);
     }
 
 }

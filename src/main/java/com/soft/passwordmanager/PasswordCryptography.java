@@ -3,10 +3,7 @@ package com.soft.passwordmanager;
 import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
+import java.security.*;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Base64;
 
@@ -54,6 +51,20 @@ public class PasswordCryptography {
         new SecureRandom().nextBytes(iv);
         return iv;
     }
+
+    public static byte[] generateSalt(){
+        byte[] salt = new byte[16];
+        new SecureRandom().nextBytes(salt);
+        return salt;
+    }
+
+    public static String hashPassword(String password, byte[] salt) throws Exception {
+        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        digest.update(salt);
+        byte[] hash = digest.digest(password.getBytes());
+        return Base64.getEncoder().encodeToString(hash);
+    }
+
 
 
 }
