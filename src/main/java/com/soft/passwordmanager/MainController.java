@@ -55,7 +55,7 @@ public class MainController {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("details-view.fxml"));
                     Parent view = loader.load();
                     DetailsController detailsController = loader.getController();
-                    detailsController.setCredentialData(newVal);
+                    detailsController.setCredentialData(newVal, MainController.this);
                     root.setCenter(view);
                 } catch (Exception e){
                     e.printStackTrace();
@@ -110,19 +110,21 @@ public class MainController {
         }
     }
 
-    public void setItemsInListView(ObservableList<Credentials>  observableList){
+    public void setItemsInListView(ObservableList<Credentials>  observableList){ //TODO: parse the actual file directory and set files from there.
         credentialsList.setItems(observableList);
         credentialsList.setCellFactory(param -> new CredentialCell());
         dataFromList = FXCollections.observableList(observableList);
     }
 
-    public void loadView(String fxmlFile){
+    public Object loadView(String fxmlFile){
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
             Parent view = loader.load();
             root.setCenter(view);
+            return loader.getController();
         } catch (Exception e){
             e.printStackTrace();
+            return null;
         }
 
     }

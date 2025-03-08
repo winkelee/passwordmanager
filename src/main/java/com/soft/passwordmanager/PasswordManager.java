@@ -8,12 +8,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import javax.crypto.SecretKey;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class PasswordManager extends Application {
 
     public static Stage primaryStage;
+    public static SecretKey key;
     public static final ObservableList<Credentials> credentialsTest = FXCollections.observableArrayList(
             new Credentials("username1", "password1", "example1.com"),
             new Credentials("username2", "password2", "example2.com"),

@@ -7,11 +7,18 @@ public class Credentials {
     String hostUrl;
 
     String fullUrl;
+    byte[] iv;
 
     public Credentials(String username, String password, String hostUrl) {
         this.username = username;
         this.password = password;
         this.hostUrl = hostUrl;
+    }
+    public Credentials(String username, String password, String hostUrl, byte[] iv) {
+        this.username = username;
+        this.password = password;
+        this.hostUrl = hostUrl;
+        this.iv = iv;
     }
     public Credentials(String username, String password, String hostUrl, String fullUrl) {
         this.username = username;

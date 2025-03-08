@@ -42,31 +42,20 @@ public class LogInController {
             @Override
             public void handle(KeyEvent event) {
                 if (event.getCode() == KeyCode.ENTER){
-                    String enteredPasswordPlainText = masterPasswordField.getText();
-                    Path pathToMasterPassword = PasswordFileController.getAppDataPath("master");
-                    try {
-                        boolean isValidMasterPassword = PasswordFileController.verifyMasterPassword(enteredPasswordPlainText, pathToMasterPassword);
-                        if (isValidMasterPassword){
-                            FXMLLoader loader = new FXMLLoader(getClass().getResource("main_view.fxml"));
-                            Parent view = loader.load();
-                            Scene scene = new Scene(view, 300, 600);
-                            scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
-                            PasswordManager.primaryStage.setScene(scene);
-                            PasswordManager.primaryStage.hide();
-                            PasswordManager.primaryStage.show();
-                        } else{
-                            displayPopUp("Oops! This does not look like a valid password.", "Close");
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        displayPopUp("Something went wrong.", "Close");
-                    }
+                    checkMasterPassword();
                 }
                 }
         });
 
+        checkButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                checkMasterPassword();
+            }
+        });
+
     }
-    public void displayPopUp(String labelText, String buttonText){
+    public static void displayPopUp(String labelText, String buttonText){
         Popup popup = new Popup();
         VBox layout = new VBox(20);
         layout.setPadding(new Insets(20));
@@ -80,6 +69,29 @@ public class LogInController {
         popup.getContent().add(layout);
         layout.setStyle("-fx-background-color: #282828; -fx-border-color: #FBF1C7; -fx-border-width: 2px; -fx-border-radius: 5px; -fx-background-radius: 5px;");
         popup.show(PasswordManager.primaryStage);
+    }
+
+    public void checkMasterPassword(){
+        String enteredPasswordPlainText = masterPasswordField.getText();
+        Path pathToMasterPassword = PasswordFileController.getAppDataPath("master");
+        try {
+            boolean isValidMasterPassword = PasswordFileController.verifyMasterPassword(enteredPasswordPlainText, pathToMasterPassword);
+            if (isValidMasterPassword){
+                PasswordManager.key = PasswordCryptography.deriveKey(enteredPasswordPlainText, PasswordFileController.getSalt(pathToMasterPassword));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("main_view.fxml"));
+                Parent view = loader.load();
+                Scene scene = new Scene(view, 300, 600);
+                scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+                PasswordManager.primaryStage.setScene(scene);
+                PasswordManager.primaryStage.hide();
+                PasswordManager.primaryStage.show();
+            } else{
+                displayPopUp("Oops! This does not look like a valid password.", "Close");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            displayPopUp("Something went wrong.", "Close");
+        }
     }
 }
 

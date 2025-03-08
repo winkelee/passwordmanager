@@ -1,11 +1,18 @@
 package com.soft.passwordmanager;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+
+import java.io.IOException;
 
 public class DetailsController {
 
@@ -28,11 +35,21 @@ public class DetailsController {
     @FXML
     private AnchorPane baseLayout;
 
-    public void setCredentialData(Credentials credentials){
+    public void setCredentialData(Credentials credentials, MainController mainController){
         websiteLabel.setText(credentials.getHostUrl());
         usernameField.setText(credentials.getUsername());
         passwordField.setText(credentials.getPassword());
         setStyles();
+
+        editButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                EditController editController = (EditController) mainController.loadView("edit-view.fxml");
+                if (editController != null){
+                    editController.setCredentialData(credentials);
+                }
+            }
+        });
     }
 
     public void setStyles(){

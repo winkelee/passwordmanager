@@ -17,8 +17,7 @@ public class PasswordCryptography {
         return factory.generateSecret(spec);
     }
 
-    public static String encrypt(String plainText, SecretKey key) throws Exception {
-        byte[] iv = generateIV();
+    public static String encrypt(String plainText, SecretKey key, byte[] iv) throws Exception {
         Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
         cipher.init(Cipher.ENCRYPT_MODE, key, new IvParameterSpec(iv));
 
