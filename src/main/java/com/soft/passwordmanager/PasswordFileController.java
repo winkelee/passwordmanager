@@ -1,13 +1,17 @@
 package com.soft.passwordmanager;
 
-import java.io.File;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Base64;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class PasswordFileController {
 
@@ -78,6 +82,33 @@ public class PasswordFileController {
         String storedData = Files.readString(pathToMasterPassword);
         String[] parts = storedData.split(":");
         return Base64.getDecoder().decode(parts[0]);
+    }
+
+    public static ObservableList<Credentials> getCredentialFiles() {
+        ObservableList<Credentials> credentialItems = FXCollections.observableArrayList();
+        try {
+            Path directoryPath = getAppDataPath("");
+            if (!Files.exists(directoryPath) || !Files.isDirectory(directoryPath)) {
+                return credentialItems;
+            }
+            Files.list(directoryPath)
+                    .filter(Files::isRegularFile)
+                    .forEach(filePath -> {
+                        Credentials credentials;
+                        try {
+                            credentials = PasswordFileController.readCredential(filePath.getFileName().toString());
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                        if (credentials != null) {
+                            credentialItems.add(credentials);
+                        }
+                    });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return credentialItems;
     }
 
 }

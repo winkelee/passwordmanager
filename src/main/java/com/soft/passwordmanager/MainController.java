@@ -18,6 +18,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
+import java.io.IOException;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -41,12 +42,12 @@ public class MainController {
     private ObservableList<Credentials> dataFromList;
 
     @FXML
-    public void initialize(){
+    public void initialize() throws IOException {
         loadView("empty-view.fxml");
 
         //TODO: add functionality to the new-view (encryption). -- DONE
         //TODO: use the written methods of PasswordFileController and PasswordCryptography to handle adding passwords.
-        //TODO: make a login screen.
+        //TODO: make a login screen. --DONE
         //TODO: add functionality to the DetailsController so that user can copy the password/username with a button.
         //TODO: add import and export functionality.
         credentialsList.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
@@ -67,12 +68,12 @@ public class MainController {
             public void handle(KeyEvent event) {
                 if (event.getCode() == KeyCode.ENTER){
                     dataFromSearch = searchBar.getText();
-                    try{
+                    try{ //TODO: change the lookForDomain implementation so that it handles real files and not testing data
                         ObservableList<Credentials> newData = FXCollections.observableList(lookForDomain(dataFromSearch, PasswordManager.credentialsTest));
                         setItemsInListView(newData);
                     } catch (Exception e){
                         e.printStackTrace(); //The exception here is EXPECTED to happen every time user hits the enter button and the field is empty.
-                        setItemsInListView(PasswordManager.credentialsTest); //However, we handle it and do not let the program get spooked.
+                        setItemsInListView(PasswordFileController.getCredentialFiles()); //However, we handle it and do not let the program get spooked.
                     }
                 }
             }
@@ -87,7 +88,7 @@ public class MainController {
         searchBar.getStyleClass().add("text-field-primary");
         VBox.setVgrow(credentialsList, Priority.ALWAYS);
         credentialsList.getStyleClass().add("listview-credentials");
-        setItemsInListView(PasswordManager.credentialsTest); //We load testing, hardcoded credentials.
+        setItemsInListView(PasswordFileController.getCredentialFiles());
         addButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
