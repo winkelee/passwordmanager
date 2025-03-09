@@ -1,5 +1,7 @@
 package com.soft.passwordmanager;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -31,6 +33,12 @@ public class ImportController {
     private Button addButton;
     @FXML
     private VBox layout;
+    private MainController mainController;
+
+
+    public void setMainController(MainController mainController){ //We need to get a reference to the main controller as we need to refresh the listview.
+        this.mainController = mainController;
+    }
 
     @FXML
     public void initialize(){
@@ -45,6 +53,26 @@ public class ImportController {
         addButton.getStyleClass().add("button-primary");
         Insets baseLayoutInsets = new Insets(20, 20, 20, 20);
         layout.setPadding(baseLayoutInsets);
+
+        addButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                String newUsername = addUsernameField.getText();
+                String plaintextPassword = addPasswordField.getText();
+                String newURL = addURLField.getText();
+
+                byte[] iv = PasswordCryptography.generateIV();
+                try {
+                    String encodedPassword = PasswordCryptography.encrypt(plaintextPassword, PasswordManager.key, iv);
+                    Credentials credentials = new Credentials(newUsername, encodedPassword, newURL, iv);  //A bit of a bad implementation here
+                    PasswordFileController.saveCredential(newURL, credentials, encodedPassword, iv);        //Ideally, we do not need to pass the iv and encoded password. Need to change this in the future.
+                    mainController.setItemsInListView(PasswordFileController.getCredentialFiles());
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
 }

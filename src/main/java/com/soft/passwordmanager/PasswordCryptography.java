@@ -3,6 +3,7 @@ package com.soft.passwordmanager;
 import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
+import javax.crypto.spec.SecretKeySpec;
 import java.security.*;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Base64;
@@ -14,7 +15,9 @@ public class PasswordCryptography {
         int keyLength = 256;
         PBEKeySpec spec = new PBEKeySpec(masterPassword.toCharArray(), salt, iterations, keyLength);
         SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
-        return factory.generateSecret(spec);
+        byte[] keyBytes = factory.generateSecret(spec).getEncoded();
+
+        return new SecretKeySpec(keyBytes, "AES");
     }
 
     public static String encrypt(String plainText, SecretKey key, byte[] iv) throws Exception {

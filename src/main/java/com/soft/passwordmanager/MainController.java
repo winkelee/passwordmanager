@@ -68,8 +68,8 @@ public class MainController {
             public void handle(KeyEvent event) {
                 if (event.getCode() == KeyCode.ENTER){
                     dataFromSearch = searchBar.getText();
-                    try{ //TODO: change the lookForDomain implementation so that it handles real files and not testing data
-                        ObservableList<Credentials> newData = FXCollections.observableList(lookForDomain(dataFromSearch, PasswordManager.credentialsTest));
+                    try{
+                        ObservableList<Credentials> newData = FXCollections.observableList(lookForDomain(dataFromSearch, PasswordFileController.getCredentialFiles()));
                         setItemsInListView(newData);
                     } catch (Exception e){
                         e.printStackTrace(); //The exception here is EXPECTED to happen every time user hits the enter button and the field is empty.
@@ -92,7 +92,8 @@ public class MainController {
         addButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                loadView("new-view.fxml");
+                ImportController importController = (ImportController) loadView("new-view.fxml");
+                importController.setMainController(MainController.this);
             }
         });
     }
@@ -129,4 +130,7 @@ public class MainController {
         }
 
     }
+
+
+
 }

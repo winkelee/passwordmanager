@@ -73,7 +73,7 @@ public class LogInController {
 
     public void checkMasterPassword(){
         String enteredPasswordPlainText = masterPasswordField.getText();
-        Path pathToMasterPassword = PasswordFileController.getAppDataPath("master");
+        Path pathToMasterPassword = PasswordFileController.getAppDataPath("master.enc");
         try {
             boolean isValidMasterPassword = PasswordFileController.verifyMasterPassword(enteredPasswordPlainText, pathToMasterPassword);
             if (isValidMasterPassword){

@@ -24,7 +24,7 @@ public class PasswordManager extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
-        Path masterPasswordPath = PasswordFileController.getAppDataPath("master");
+        Path masterPasswordPath = PasswordFileController.getAppDataPath("master.enc");
         FXMLLoader loader;
         if (Files.exists(masterPasswordPath)){
             loader = new FXMLLoader(getClass().getResource("login-view.fxml"));
@@ -45,3 +45,5 @@ public class PasswordManager extends Application {
     }
 
 }
+
+

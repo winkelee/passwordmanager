@@ -50,7 +50,7 @@ public class SignUpController {
 
     public void saveMasterPassword(){
         String plaintextMasterPassword = masterPasswordField.getText();
-        Path masterPasswordPath = PasswordFileController.getAppDataPath("master");
+        Path masterPasswordPath = PasswordFileController.getAppDataPath("master.enc");
         try {
             PasswordFileController.saveMasterPassword(plaintextMasterPassword, masterPasswordPath);
             PasswordManager.key = PasswordCryptography.deriveKey(plaintextMasterPassword, PasswordFileController.getSalt(masterPasswordPath));

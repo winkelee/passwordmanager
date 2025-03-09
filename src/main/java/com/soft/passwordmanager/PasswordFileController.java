@@ -26,18 +26,14 @@ public class PasswordFileController {
             baseDirectory = Paths.get(home, ".passwordmanager");
         }
         baseDirectory.toFile().mkdirs();
-        if (fileName.equals("")){
-            return baseDirectory.resolve(fileName); //This is here because, if we do not pass anything as an argument, we want to return the path without any filename, and not the filename being a .enc
-        } else {
-            return baseDirectory.resolve(fileName + ".enc");
-        }
+        return baseDirectory.resolve(fileName); //SUPPLYING .ENC FILE EXTENSION IS REQUIRED.
 
     }
 
-    public static void saveCredential(String fileName, Credentials credentials, String encryptedPassword, byte[] iv) throws IOException { //When providing filename for this and the next method,
+    public static void saveCredential(String fileName, Credentials credentials, String encryptedPassword, byte[] iv) throws IOException {
         Path filePath = getAppDataPath(fileName);
-        String fileContents = credentials.getHostUrl() + "\n" +                                                                             //DO NOT SUPPLY THE .ENC FILE EXTENSION,
-                credentials.getUsername() + "\n" +                                                                                          //It is already supplied by getAppDataPath().
+        String fileContents = credentials.getHostUrl() + "\n" +
+                credentials.getUsername() + "\n" +
                 Base64.getEncoder().encodeToString(iv) + "\n" +
                 encryptedPassword;
 
@@ -97,6 +93,8 @@ public class PasswordFileController {
                         Credentials credentials;
                         try {
                             credentials = PasswordFileController.readCredential(filePath.getFileName().toString());
+                            System.out.println(credentials.toString());
+                            System.out.println(filePath.getFileName().toString());
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
