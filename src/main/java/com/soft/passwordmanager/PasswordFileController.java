@@ -43,10 +43,14 @@ public class PasswordFileController {
     public static Credentials readCredential(String fileName) throws IOException {
         Path filePath = getAppDataPath(fileName);
         if (!Files.exists(filePath)) {
+            System.out.println("Error while trying to read file: " + fileName);
+            System.out.println("Could not read credential because it does not exist.");
             return null;
         }
         List<String> lines = Files.readAllLines(filePath, StandardCharsets.UTF_8);
         if (lines.size() < 4) {
+            System.out.println("Error while trying to read file: " + fileName);
+            System.out.println("Could not read file as it does not correspond to the stored credential format.");
             return null;
         }
         String website = lines.get(0);
@@ -84,11 +88,13 @@ public class PasswordFileController {
         ObservableList<Credentials> credentialItems = FXCollections.observableArrayList();
         try {
             Path directoryPath = getAppDataPath("");
+            System.out.println(directoryPath);
             if (!Files.exists(directoryPath) || !Files.isDirectory(directoryPath)) {
                 return credentialItems;
             }
             Files.list(directoryPath)
                     .filter(Files::isRegularFile)
+                    .filter(filePath -> !filePath.getFileName().toString().equals("master.enc"))
                     .forEach(filePath -> {
                         Credentials credentials;
                         try {
