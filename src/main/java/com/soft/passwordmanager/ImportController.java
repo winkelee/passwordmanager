@@ -65,7 +65,7 @@ public class ImportController {
                 try {
                     String encodedPassword = PasswordCryptography.encrypt(plaintextPassword, PasswordManager.key, iv);
                     Credentials credentials = new Credentials(newUsername, encodedPassword, newURL, iv);  //A bit of a bad implementation here
-                    PasswordFileController.saveCredential(newURL, credentials, encodedPassword, iv);        //Ideally, we do not need to pass the iv and encoded password. Need to change this in the future.
+                    PasswordFileController.saveCredential(newURL + ".enc", credentials, encodedPassword, iv);        //Ideally, we do not need to pass the iv and encoded password. Need to change this in the future.
                     mainController.setItemsInListView(PasswordFileController.getCredentialFiles());
 
                 } catch (Exception e) {

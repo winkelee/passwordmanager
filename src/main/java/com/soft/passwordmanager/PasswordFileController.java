@@ -31,13 +31,18 @@ public class PasswordFileController {
     }
 
     public static void saveCredential(String fileName, Credentials credentials, String encryptedPassword, byte[] iv) throws IOException {
-        Path filePath = getAppDataPath(fileName);
+        Path filePath = getAppDataPath(fileName); //Knowing that the filename is the website name, we need to handle adding .enc in the filename
         String fileContents = credentials.getHostUrl() + "\n" +
                 credentials.getUsername() + "\n" +
                 Base64.getEncoder().encodeToString(iv) + "\n" +
                 encryptedPassword;
 
         Files.write(filePath, fileContents.getBytes(StandardCharsets.UTF_8));
+    }
+
+    public static boolean deleteCredential(String filename) throws IOException {
+        Path filepath = getAppDataPath(filename);
+        return Files.deleteIfExists(filepath);
     }
 
     public static Credentials readCredential(String fileName) throws IOException {

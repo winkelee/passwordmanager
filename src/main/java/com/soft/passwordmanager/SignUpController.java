@@ -55,7 +55,7 @@ public class SignUpController {
             PasswordFileController.saveMasterPassword(plaintextMasterPassword, masterPasswordPath);
             PasswordManager.key = PasswordCryptography.deriveKey(plaintextMasterPassword, PasswordFileController.getSalt(masterPasswordPath));
             FXMLLoader loader = new FXMLLoader(getClass().getResource("main_view.fxml"));
-            Parent view = loader.load(); //java.lang.IllegalStateException: Location is not set.
+            Parent view = loader.load();
             Scene scene = new Scene(view, 300, 600);
             scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
             PasswordManager.primaryStage.setScene(scene);

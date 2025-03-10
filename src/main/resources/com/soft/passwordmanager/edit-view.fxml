@@ -14,7 +14,7 @@
             >
     <HBox fx:id="layout" spacing="100">
         <VBox>
-            <TextField text="Website" fx:id="websiteLabel"/>
+            <TextField text="Website" fx:id="websiteDomain"/>
             <HBox spacing="20">
                 <TextField fx:id="usernameField"/>
             </HBox>

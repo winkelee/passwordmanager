@@ -11,6 +11,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 
+import java.io.File;
+
 public class EditController {
     @FXML
     private TextField websiteDomain;
@@ -27,10 +29,10 @@ public class EditController {
     @FXML
     private AnchorPane baseLayout;
 
-    public void setCredentialData(Credentials credentials){
-        websiteDomain.setText(credentials.getHostUrl());
+    public void setCredentialData(Credentials credentials, MainController mainController) throws Exception {
+        websiteDomain.setText(credentials.getHostUrl()); //TODO: fix Cannot invoke "javafx.scene.control.TextField.setText(String)" because "this.websiteDomain" is null
         usernameField.setText(credentials.getUsername());
-        passwordField.setText(credentials.getPassword());
+        passwordField.setText(PasswordCryptography.decrypt(credentials.getPassword(), PasswordManager.key, credentials.getIv()));
         setStyles();
 
         saveButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -42,13 +44,27 @@ public class EditController {
                 byte[] iv = PasswordCryptography.generateIV();
                 try {
                     String encryptedPassword = PasswordCryptography.encrypt(newPassword, PasswordManager.key, iv);
-                    Credentials credentials = new Credentials(newUsername, encryptedPassword, newDomain);
-                    PasswordFileController.saveCredential(newDomain, credentials, encryptedPassword, iv);
+                    Credentials credentials = new Credentials(newUsername, encryptedPassword, newDomain, iv);
+                    PasswordFileController.deleteCredential(credentials.getHostUrl() + ".enc");
+                    PasswordFileController.saveCredential(newDomain + ".enc", credentials, encryptedPassword, iv);
+                    DetailsController detailsControllerLittle = (DetailsController) mainController.loadView("details-view.fxml");
+                    detailsControllerLittle.setCredentialData(credentials, mainController);
+                    mainController.setItemsInListView(PasswordFileController.getCredentialFiles());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
+
+        cancelButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                DetailsController detailsControllerLittle = (DetailsController) mainController.loadView("details-view.fxml");
+                detailsControllerLittle.setCredentialData(credentials, mainController);
+            }
+        });
+
+
 
     }
 

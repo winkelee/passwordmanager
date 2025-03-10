@@ -33,10 +33,9 @@ public class PasswordCryptography {
         return Base64.getEncoder().encodeToString(combined);
     }
 
-    public static String decrypt(String encryptedText, SecretKey key) throws Exception {
+    public static String decrypt(String encryptedText, SecretKey key, byte[] iv) throws Exception {
         byte[] combined = Base64.getDecoder().decode(encryptedText);
 
-        byte[] iv = new byte[16];
         byte[] encryptedBytes = new byte[combined.length - 16];
         System.arraycopy(combined, 0, iv, 0, 16);
         System.arraycopy(combined, 16, encryptedBytes, 0, encryptedBytes.length);

@@ -63,6 +63,10 @@ public class Credentials {
         this.hostUrl = hostUrl;
     }
 
+    public byte[] getIv(){
+        return iv;
+    }
+
     @Override
     public String toString(){
         return username + " " + password + " " + hostUrl;

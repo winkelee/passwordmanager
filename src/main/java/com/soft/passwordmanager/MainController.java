@@ -46,7 +46,6 @@ public class MainController {
         loadView("empty-view.fxml");
 
         //TODO: use the written methods of PasswordFileController and PasswordCryptography to handle adding passwords.
-        //TODO: add functionality to the DetailsController so that user can copy the password/username with a button.
         //TODO: add import and export functionality.
         credentialsList.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal != null){
@@ -54,7 +53,8 @@ public class MainController {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("details-view.fxml"));
                     Parent view = loader.load();
                     DetailsController detailsController = loader.getController();
-                    detailsController.setCredentialData(newVal, MainController.this);
+                    Credentials credentials = PasswordFileController.readCredential(newVal.getHostUrl() + ".enc");
+                    detailsController.setCredentialData(credentials, MainController.this);
                     root.setCenter(view);
                 } catch (Exception e){
                     e.printStackTrace();

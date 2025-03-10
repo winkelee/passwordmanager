@@ -9,6 +9,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 
@@ -38,15 +40,45 @@ public class DetailsController {
     public void setCredentialData(Credentials credentials, MainController mainController){
         websiteLabel.setText(credentials.getHostUrl());
         usernameField.setText(credentials.getUsername());
-        passwordField.setText(credentials.getPassword());
+        passwordField.setText("●●●●●●●●");
         setStyles();
-
         editButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 EditController editController = (EditController) mainController.loadView("edit-view.fxml");
                 if (editController != null){
-                    editController.setCredentialData(credentials);
+                    try {
+                        editController.setCredentialData(credentials, mainController);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        });
+
+        deleteButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    PasswordFileController.deleteCredential(credentials.getHostUrl() + ".enc");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                mainController.setItemsInListView(PasswordFileController.getCredentialFiles());
+            }
+        });
+
+        copyButtonPassword.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    String password = PasswordCryptography.decrypt(credentials.getPassword(), PasswordManager.key, credentials.getIv());
+                    Clipboard clipboard = Clipboard.getSystemClipboard();
+                    ClipboardContent clipboardContent = new ClipboardContent();
+                    clipboardContent.putString(password);
+                    clipboard.setContent(clipboardContent);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         });
