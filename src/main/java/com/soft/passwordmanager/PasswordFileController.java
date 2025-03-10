@@ -16,6 +16,7 @@ import java.nio.file.Paths;
 import java.util.Base64;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class PasswordFileController {
@@ -36,7 +37,14 @@ public class PasswordFileController {
     }
 
     public static void saveCredential(String fileName, Credentials credentials, String encryptedPassword, byte[] iv) throws IOException {
-        Path filePath = getAppDataPath(fileName); //Knowing that the filename is the website name, we need to handle adding .enc in the filename
+        String randomString = UUID.randomUUID().toString().replace("-", "").substring(0, 8);
+        Path filePath;
+        if (fileName.contains(".enc")){
+            fileName = fileName.substring(0, fileName.length() - 4);
+            filePath = getAppDataPath(fileName + "_" + credentials.getUsername() + ".enc");
+        } else{
+            filePath = getAppDataPath(fileName + "_" + credentials.getUsername() + ".enc");
+        }
         String fileContents = credentials.getHostUrl() + "\n" +
                 credentials.getUsername() + "\n" +
                 Base64.getEncoder().encodeToString(iv) + "\n" +
@@ -66,6 +74,7 @@ public class PasswordFileController {
                 byte[] iv = PasswordCryptography.generateIV();
                 String encryptedPassword = PasswordCryptography.encrypt(plaintextPassword, PasswordManager.key, iv);
                 Credentials credentials = new Credentials(username, encryptedPassword, website, iv); //meow meow meow
+                saveCredential(website + ".enc", credentials, encryptedPassword, iv);
                 credentialsList.add(credentials);
             }
         } catch (Exception e) {

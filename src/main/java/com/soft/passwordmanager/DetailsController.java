@@ -82,6 +82,21 @@ public class DetailsController {
                 }
             }
         });
+
+        copyButtonUsername.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                try{
+                    String username = usernameField.getText();
+                    Clipboard clipboard = Clipboard.getSystemClipboard();
+                    ClipboardContent clipboardContent = new ClipboardContent();
+                    clipboardContent.putString(username);
+                    clipboard.setContent(clipboardContent);
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     public void setStyles(){

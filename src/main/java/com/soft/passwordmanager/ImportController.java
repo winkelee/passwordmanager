@@ -86,8 +86,8 @@ public class ImportController {
                 File file = fileChooser.showOpenDialog(PasswordManager.primaryStage);
                 if (file != null){
                     try {
-                        mainController.setItemsInListView(PasswordFileController.readImportedData(file));
                         PasswordFileController.readImportedData(file);
+                        mainController.setItemsInListView(PasswordFileController.getCredentialFiles());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

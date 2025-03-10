@@ -53,7 +53,7 @@ public class MainController {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("details-view.fxml"));
                     Parent view = loader.load();
                     DetailsController detailsController = loader.getController();
-                    Credentials credentials = PasswordFileController.readCredential(newVal.getHostUrl() + ".enc");
+                    Credentials credentials = PasswordFileController.readCredential(newVal.getHostUrl() + "_" + newVal.getUsername() + ".enc");
                     detailsController.setCredentialData(credentials, MainController.this);
                     root.setCenter(view);
                 } catch (Exception e){

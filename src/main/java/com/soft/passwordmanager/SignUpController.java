@@ -59,6 +59,8 @@ public class SignUpController {
             Scene scene = new Scene(view, 300, 600);
             scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
             PasswordManager.primaryStage.setScene(scene);
+            PasswordManager.primaryStage.hide();
+            PasswordManager.primaryStage.show();
         } catch (Exception e) {
             e.printStackTrace();
             LogInController.displayPopUp("Something went wrong.", "Close");
