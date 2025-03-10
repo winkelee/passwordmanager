@@ -1,5 +1,6 @@
 package com.soft.passwordmanager;
 
+import com.opencsv.exceptions.CsvValidationException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -11,6 +12,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
+
+import java.io.File;
+import java.io.IOException;
 
 public class ImportController {
     @FXML
@@ -70,6 +75,22 @@ public class ImportController {
 
                 } catch (Exception e) {
                     e.printStackTrace();
+                }
+            }
+        });
+
+        importButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                FileChooser fileChooser = new FileChooser();
+                File file = fileChooser.showOpenDialog(PasswordManager.primaryStage);
+                if (file != null){
+                    try {
+                        mainController.setItemsInListView(PasswordFileController.readImportedData(file));
+                        PasswordFileController.readImportedData(file);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });

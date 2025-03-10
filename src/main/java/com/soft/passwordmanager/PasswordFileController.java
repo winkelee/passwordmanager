@@ -1,8 +1,13 @@
 package com.soft.passwordmanager;
 
+import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvValidationException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -43,6 +48,31 @@ public class PasswordFileController {
     public static boolean deleteCredential(String filename) throws IOException {
         Path filepath = getAppDataPath(filename);
         return Files.deleteIfExists(filepath);
+    }
+
+    public static ObservableList<Credentials> readImportedData(File file) throws IOException, CsvValidationException {
+        ObservableList<Credentials> credentialsList = FXCollections.observableArrayList();
+        Path path = Path.of(file.getAbsolutePath());
+        try (CSVReader csvReader = new CSVReader(new FileReader(path.toFile()))) {
+            String[] values;
+            while ((values = csvReader.readNext()) != null) {
+                if (values.length < 3) {
+                    System.out.println("Skipping invalid row: " + String.join(", ", values));
+                    continue;
+                }
+                String website = values[0];
+                String username = values[1];
+                String plaintextPassword = values[2];
+                byte[] iv = PasswordCryptography.generateIV();
+                String encryptedPassword = PasswordCryptography.encrypt(plaintextPassword, PasswordManager.key, iv);
+                Credentials credentials = new Credentials(username, encryptedPassword, website, iv); //meow meow meow
+                credentialsList.add(credentials);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return credentialsList;
     }
 
     public static Credentials readCredential(String fileName) throws IOException {

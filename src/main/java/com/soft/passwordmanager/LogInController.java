@@ -11,6 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -27,7 +28,7 @@ public class LogInController {
     @FXML
     private AnchorPane baseLayout;
     @FXML
-    private TextField masterPasswordField;
+    private PasswordField masterPasswordField;
     @FXML
     private Button checkButton;
 

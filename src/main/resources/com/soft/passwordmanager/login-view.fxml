@@ -17,7 +17,7 @@
             <Label fx:id="loginLabelOne" text="Welcome back! Please enter your password."/>
         </VBox>
         <HBox spacing="20">
-            <TextField fx:id="masterPasswordField" promptText="Enter password here..."/>
+            <PasswordField fx:id="masterPasswordField" promptText="Enter password here..."/>
             <Button fx:id="checkButton" text="Log in"/>
         </HBox>
     </VBox>
