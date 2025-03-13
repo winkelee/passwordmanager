@@ -1,0 +1,6 @@
+<component name="ArtifactManager">
+  <artifact type="jpackage" name="linux-release">
+    <output-path>$PROJECT_DIR$/out/artifacts/linux_release</output-path>
+    <root id="root" />
+  </artifact>
+</component>

@@ -36,14 +36,14 @@ public class PasswordFileController {
 
     }
 
-    public static void saveCredential(String fileName, Credentials credentials, String encryptedPassword, byte[] iv) throws IOException {
+    public static void saveCredential(String domainName, Credentials credentials, String encryptedPassword, byte[] iv) throws IOException { //When using this method, DO NOT build the filename in it. The method will do it on its own.
         String randomString = UUID.randomUUID().toString().replace("-", "").substring(0, 8);
         Path filePath;
-        if (fileName.contains(".enc")){
-            fileName = fileName.substring(0, fileName.length() - 4);
-            filePath = getAppDataPath(fileName + "_" + credentials.getUsername() + ".enc");
+        if (domainName.contains(".enc")){
+            domainName = domainName.substring(0, domainName.length() - 4);
+            filePath = getAppDataPath(domainName + "_" + credentials.getUsername() + ".enc");
         } else{
-            filePath = getAppDataPath(fileName + "_" + credentials.getUsername() + ".enc");
+            filePath = getAppDataPath(domainName + "_" + credentials.getUsername() + ".enc");
         }
         String fileContents = credentials.getHostUrl() + "\n" +
                 credentials.getUsername() + "\n" +
@@ -55,6 +55,7 @@ public class PasswordFileController {
 
     public static boolean deleteCredential(String filename) throws IOException {
         Path filepath = getAppDataPath(filename);
+        System.out.println("ATTEMPTING TO DELETE: " + filepath);
         return Files.deleteIfExists(filepath);
     }
 
@@ -143,8 +144,6 @@ public class PasswordFileController {
                         Credentials credentials;
                         try {
                             credentials = PasswordFileController.readCredential(filePath.getFileName().toString());
-                            System.out.println(credentials.toString());
-                            System.out.println(filePath.getFileName().toString());
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
