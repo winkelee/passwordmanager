@@ -55,6 +55,7 @@ public class PasswordFileController {
 
     public static boolean deleteCredential(String filename) throws IOException {
         Path filepath = getAppDataPath(filename);
+        System.out.println("ATTEMPTING TO DELETE: " + filepath);
         return Files.deleteIfExists(filepath);
     }
 

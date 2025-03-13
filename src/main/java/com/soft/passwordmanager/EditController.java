@@ -35,7 +35,7 @@ public class EditController {
         passwordField.setText(PasswordCryptography.decrypt(credentials.getPassword(), PasswordManager.key, credentials.getIv()));
         setStyles();
 
-        saveButton.setOnAction(new EventHandler<ActionEvent>() {
+        saveButton.setOnAction(new EventHandler<ActionEvent>() { //TODO: Fix the bug, we need to delete the previous file and save this.
             @Override
             public void handle(ActionEvent event) {
                 String newDomain = websiteDomain.getText();
@@ -44,11 +44,11 @@ public class EditController {
                 byte[] iv = PasswordCryptography.generateIV();
                 try {
                     String encryptedPassword = PasswordCryptography.encrypt(newPassword, PasswordManager.key, iv);
-                    Credentials credentials = new Credentials(newUsername, encryptedPassword, newDomain, iv);
-                    PasswordFileController.deleteCredential(credentials.getHostUrl() + ".enc");
-                    PasswordFileController.saveCredential(newDomain + ".enc", credentials, encryptedPassword, iv);
+                    Credentials credentials1 = new Credentials(newUsername, encryptedPassword, newDomain, iv);
+                    PasswordFileController.deleteCredential(credentials.getHostUrl() + "_" + credentials.getUsername() + ".enc");
+                    PasswordFileController.saveCredential(newDomain + "_" + newUsername + ".enc", credentials1, encryptedPassword, iv);
                     DetailsController detailsControllerLittle = (DetailsController) mainController.loadView("details-view.fxml");
-                    detailsControllerLittle.setCredentialData(credentials, mainController);
+                    detailsControllerLittle.setCredentialData(credentials1, mainController);
                     mainController.setItemsInListView(PasswordFileController.getCredentialFiles());
                 } catch (Exception e) {
                     e.printStackTrace();

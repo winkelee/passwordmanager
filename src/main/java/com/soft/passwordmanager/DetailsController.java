@@ -60,7 +60,7 @@ public class DetailsController {
             @Override
             public void handle(ActionEvent event) {
                 try {
-                    PasswordFileController.deleteCredential(credentials.getHostUrl() + ".enc");
+                    PasswordFileController.deleteCredential(credentials.getHostUrl() + "_" + credentials.getUsername() + ".enc");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

@@ -110,7 +110,7 @@ public class MainController {
         }
     }
 
-    public void setItemsInListView(ObservableList<Credentials>  observableList){ //TODO: parse the actual file directory and set files from there.
+    public void setItemsInListView(ObservableList<Credentials>  observableList){
         credentialsList.setItems(observableList);
         credentialsList.setCellFactory(param -> new CredentialCell());
         dataFromList = FXCollections.observableList(observableList);
