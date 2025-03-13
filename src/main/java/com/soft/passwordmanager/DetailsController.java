@@ -65,6 +65,7 @@ public class DetailsController {
                     e.printStackTrace();
                 }
                 mainController.setItemsInListView(PasswordFileController.getCredentialFiles());
+                mainController.loadView("empty-view.fxml");
             }
         });
 

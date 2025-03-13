@@ -45,8 +45,9 @@ public class EditController {
                 try {
                     String encryptedPassword = PasswordCryptography.encrypt(newPassword, PasswordManager.key, iv);
                     Credentials credentials1 = new Credentials(newUsername, encryptedPassword, newDomain, iv);
-                    PasswordFileController.deleteCredential(credentials.getHostUrl() + "_" + credentials.getUsername() + ".enc");
-                    PasswordFileController.saveCredential(newDomain + "_" + newUsername + ".enc", credentials1, encryptedPassword, iv);
+                    System.out.println("ATTEMPTING TO DELETE FILE " + credentials.getHostUrl() + "_" + credentials.getUsername() + ".enc");
+                    System.out.println("DELETED: " + PasswordFileController.deleteCredential(credentials.getHostUrl() + "_" + credentials.getUsername() + ".enc"));
+                    PasswordFileController.saveCredential(newDomain, credentials1, encryptedPassword, iv);
                     DetailsController detailsControllerLittle = (DetailsController) mainController.loadView("details-view.fxml");
                     detailsControllerLittle.setCredentialData(credentials1, mainController);
                     mainController.setItemsInListView(PasswordFileController.getCredentialFiles());
