@@ -53,7 +53,7 @@ jlink {
         name = 'passwordmanager'
     }
     jpackage {
-        installerType = "exe"
+        installerType = "deb"
     }
 
 }

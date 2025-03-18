@@ -1,14 +1,12 @@
 package com.soft.passwordmanager;
 
 import com.opencsv.CSVReader;
+import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvValidationException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -36,6 +34,15 @@ public class PasswordFileController {
 
     }
 
+    public static Path getDocumentsPath(String fileName) {
+        String home = System.getProperty("user.home");
+        Path documentsDirectory;
+        documentsDirectory = Paths.get(home, "Documents");
+        documentsDirectory.toFile().mkdirs();
+        return documentsDirectory.resolve(fileName);
+    }
+
+
     public static void saveCredential(String domainName, Credentials credentials, String encryptedPassword, byte[] iv) throws IOException { //When using this method, DO NOT build the filename in it. The method will do it on its own.
         String randomString = UUID.randomUUID().toString().replace("-", "").substring(0, 8);
         Path filePath;
@@ -59,7 +66,7 @@ public class PasswordFileController {
         return Files.deleteIfExists(filepath);
     }
 
-    public static ObservableList<Credentials> readImportedData(File file) throws IOException, CsvValidationException {
+    public static ObservableList<Credentials> readImportedData(File file) {
         ObservableList<Credentials> credentialsList = FXCollections.observableArrayList();
         Path path = Path.of(file.getAbsolutePath());
         try (CSVReader csvReader = new CSVReader(new FileReader(path.toFile()))) {
@@ -83,6 +90,23 @@ public class PasswordFileController {
         }
 
         return credentialsList;
+    }
+
+    public static void exportData() throws Exception {
+        Path filepath = getDocumentsPath("exported.csv");
+        File file = new File(filepath.toString());
+        FileWriter fileWriter = new FileWriter(file);
+        CSVWriter csvWriter = new CSVWriter(fileWriter);
+        ObservableList<Credentials> credentials = getCredentialFiles();
+
+        for (int i = 0; i < credentials.size(); i++){
+            Credentials gottenCredential = credentials.get(i);
+            String[] parsedCredential = {gottenCredential.getHostUrl(), gottenCredential.getUsername(), PasswordCryptography.decrypt(gottenCredential.getPassword(), PasswordManager.key, gottenCredential.getIv())};
+            csvWriter.writeNext(parsedCredential);
+        }
+
+        csvWriter.close();
+        PasswordManager.displayPopUp("Your data was successfully exported!", "Close");
     }
 
     public static Credentials readCredential(String fileName) throws IOException {

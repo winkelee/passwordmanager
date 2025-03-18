@@ -17,6 +17,10 @@
             <Label text="Add new credentials via import (csv)." fx:id="importLabel"/>
             <Button text="Import..." fx:id="importButton" id="importButton"/>
         </HBox>
+        <HBox>
+            <Label text="Export credentials." fx:id="exportLabel"/>
+            <Button text="Export..." fx:id="exportButton"/>
+        </HBox>
         <VBox spacing="10">
             <Label text="Or add new credentials natively" fx:id="nativeLabel"/>
             <HBox>

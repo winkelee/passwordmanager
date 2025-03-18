@@ -37,6 +37,10 @@ public class ImportController {
     @FXML
     private Button addButton;
     @FXML
+    private Label exportLabel;
+    @FXML
+    private Button exportButton;
+    @FXML
     private VBox layout;
     private MainController mainController;
 
@@ -56,6 +60,8 @@ public class ImportController {
         addPasswordField.getStyleClass().add("text-field-primary");
         addURLField.getStyleClass().add("text-field-primary");
         addButton.getStyleClass().add("button-primary");
+        exportButton.getStyleClass().add("button-primary");
+        exportLabel.getStyleClass().add("text-label-primary");
         Insets baseLayoutInsets = new Insets(20, 20, 20, 20);
         layout.setPadding(baseLayoutInsets);
 
@@ -78,6 +84,20 @@ public class ImportController {
                 }
             }
         });
+
+        exportButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    PasswordFileController.exportData();
+
+                } catch (Exception e) {
+                    PasswordManager.displayPopUp("Something went wrong!", "Close");
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
 
         importButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override

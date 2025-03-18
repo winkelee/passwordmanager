@@ -56,21 +56,6 @@ public class LogInController {
         });
 
     }
-    public static void displayPopUp(String labelText, String buttonText){
-        Popup popup = new Popup();
-        VBox layout = new VBox(20);
-        layout.setPadding(new Insets(20));
-        layout.setAlignment(Pos.CENTER);
-        Label label = new Label(labelText);
-        label.getStyleClass().add("text-label-primary");
-        Button closeButton = new Button(buttonText);
-        closeButton.getStyleClass().add("button-primary");
-        closeButton.setOnAction(eventButton -> popup.hide());
-        layout.getChildren().addAll(label, closeButton);
-        popup.getContent().add(layout);
-        layout.setStyle("-fx-background-color: #282828; -fx-border-color: #FBF1C7; -fx-border-width: 2px; -fx-border-radius: 5px; -fx-background-radius: 5px;");
-        popup.show(PasswordManager.primaryStage);
-    }
 
     public void checkMasterPassword(){
         String enteredPasswordPlainText = masterPasswordField.getText();
@@ -87,11 +72,11 @@ public class LogInController {
                 PasswordManager.primaryStage.hide();
                 PasswordManager.primaryStage.show();
             } else{
-                displayPopUp("Oops! This does not look like a valid password.", "Close");
+                PasswordManager.displayPopUp("Oops! This does not look like a valid password.", "Close");
             }
         } catch (Exception e) {
             e.printStackTrace();
-            displayPopUp("Something went wrong.", "Close");
+            PasswordManager.displayPopUp("Something went wrong.", "Close");
         }
     }
 }

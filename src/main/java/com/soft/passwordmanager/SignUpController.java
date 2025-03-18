@@ -63,7 +63,7 @@ public class SignUpController {
             PasswordManager.primaryStage.show();
         } catch (Exception e) {
             e.printStackTrace();
-            LogInController.displayPopUp("Something went wrong.", "Close");
+            PasswordManager.displayPopUp("Something went wrong.", "Close");
         }
     }
 

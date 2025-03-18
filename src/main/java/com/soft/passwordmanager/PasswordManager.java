@@ -4,8 +4,14 @@ import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 
 import javax.crypto.SecretKey;
@@ -34,6 +40,22 @@ public class PasswordManager extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
         System.out.println("BOOTING UP COMPLETED");
+    }
+
+    public static void displayPopUp(String labelText, String buttonText){
+        Popup popup = new Popup();
+        VBox layout = new VBox(20);
+        layout.setPadding(new Insets(20));
+        layout.setAlignment(Pos.CENTER);
+        Label label = new Label(labelText);
+        label.getStyleClass().add("text-label-primary");
+        Button closeButton = new Button(buttonText);
+        closeButton.getStyleClass().add("button-primary");
+        closeButton.setOnAction(eventButton -> popup.hide());
+        layout.getChildren().addAll(label, closeButton);
+        popup.getContent().add(layout);
+        layout.setStyle("-fx-background-color: #282828; -fx-border-color: #FBF1C7; -fx-border-width: 2px; -fx-border-radius: 5px; -fx-background-radius: 5px;");
+        popup.show(PasswordManager.primaryStage);
     }
 
     public static void main(String[] args){
