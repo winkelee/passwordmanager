@@ -30,7 +30,7 @@ To install this program on Linux:
     
  3. After the installation, the program can be found on **opt/passwordmanager/bin** by the name **passwordmanager**
 
-### Usage:
+## Usage:
 
 #### Adding a new credential:
 
